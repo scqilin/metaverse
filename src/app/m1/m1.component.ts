@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 @Component({
   selector: 'app-m1',
   template: `
-    <div #m1></div>
+    <div #container></div>
   `,
   styles: [
   ]
 })
 export class M1Component implements OnInit {
+  request: any;
+  @ViewChild('container') container: ElementRef | undefined;
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+  ngAfterViewInit(): void {
     this.initScene();
   }
 
@@ -25,7 +30,7 @@ export class M1Component implements OnInit {
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x7ab7ee, 1);
-    document.body.appendChild(renderer.domElement);
+    this.container?.nativeElement.appendChild(renderer.domElement);
 
     scene.fog = new THREE.Fog(0x7ab7ee, 0, 200);
 
@@ -69,7 +74,7 @@ export class M1Component implements OnInit {
     scene.add(ambientLight);
 
     const animate = () => {
-      requestAnimationFrame(animate);
+      this.request = requestAnimationFrame(animate);
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -78,6 +83,9 @@ export class M1Component implements OnInit {
     }
     animate();
 
+  }
+  ngOnDestroy(): void {
+      cancelAnimationFrame(this.request);
   }
 
 

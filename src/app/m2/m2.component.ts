@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as TWEEN from '@tweenjs/tween.js';
 @Component({
   selector: 'app-m2',
   template: `
-
+    <div #container></div>
   `,
   styles: [
   ]
 })
 export class M2Component implements OnInit {
-
+  request:any
+  @ViewChild('container') container: ElementRef | undefined;
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+  ngAfterViewInit(): void {
     this.initScene();
   }
 
@@ -23,12 +27,14 @@ export class M2Component implements OnInit {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 30)
+    camera.position.set(0, 10, 30)
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x7ab7ee, 1);
-    document.body.appendChild(renderer.domElement);
+
+    this.container?.nativeElement.appendChild(renderer.domElement);
+
 
     scene.fog = new THREE.Fog(0x7ab7ee, 0, 200);
     scene.add(new THREE.AxesHelper(10));
@@ -78,7 +84,7 @@ export class M2Component implements OnInit {
     scene.add(ambientLight);
 
     const animate = () => {
-      requestAnimationFrame(animate);
+      this.request = requestAnimationFrame(animate);
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -127,6 +133,10 @@ export class M2Component implements OnInit {
 
     return { x: k * x, y: k * y, z: k * z };
   }
+
+  ngOnDestroy(): void {
+    cancelAnimationFrame(this.request);
+}
 
 
 }

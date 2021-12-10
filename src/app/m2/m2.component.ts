@@ -1,0 +1,132 @@
+import { Component, OnInit } from '@angular/core';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import * as TWEEN from '@tweenjs/tween.js';
+@Component({
+  selector: 'app-m2',
+  template: `
+
+  `,
+  styles: [
+  ]
+})
+export class M2Component implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.initScene();
+  }
+
+  initScene() {
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 30)
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x7ab7ee, 1);
+    document.body.appendChild(renderer.domElement);
+
+    scene.fog = new THREE.Fog(0x7ab7ee, 0, 200);
+    scene.add(new THREE.AxesHelper(10));
+    let spheredr = 10;
+
+    const geometrySphere = new THREE.SphereGeometry(spheredr, 60, 60);
+    const materialSphere = new THREE.MeshPhongMaterial({ color: 0x588050 });
+    const sphere = new THREE.Mesh(geometrySphere, materialSphere);
+    scene.add(sphere);
+
+    const groupall = new THREE.Group();
+    scene.add(groupall);
+
+    const materialTrunk = new THREE.MeshBasicMaterial({ color: 0x89554e });
+    const materialCrown = new THREE.MeshPhongMaterial({ color: 0x588050 });
+
+
+
+    let scaleK = 1; //比例系数
+    let addOneTree = (x: number, y: number, z: number) => {
+      const group = new THREE.Group();
+      group.scale.set(0.1, 0.1, 0.1);
+      groupall.add(group);
+      const geometry = new THREE.BoxGeometry(0.2 * scaleK, 0.2 * scaleK, 1 * scaleK);
+      const cube = new THREE.Mesh(geometry, materialTrunk);
+      cube.position.set(0, 0, -scaleK * 0.5);
+      group.add(cube);
+      const geometry3 = new THREE.ConeGeometry(0.6 + Math.random() * 0.6 - 0.3, 1 * scaleK, 6);
+      const cone = new THREE.Mesh(geometry3, materialCrown);
+      cone.position.set(0, 0, -1.5 * scaleK);
+      cone.rotateX(-Math.PI / 2);
+      group.add(cone);
+      this.tweenScale(group, 0.1, 1, 2000)
+      group.position.set(x, y, z);
+      group.lookAt(new THREE.Vector3(0, 0, 0));
+    }
+
+    renderer.render(scene, camera);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(1, 1, 1);
+    scene.add(light);
+
+    const ambientLight = new THREE.AmbientLight(0x444444);
+    scene.add(ambientLight);
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.render(scene, camera);
+      groupall.rotation.y += 0.0004;
+      TWEEN.update();
+    }
+    animate();
+    let num = 0;
+    let seti1 = setInterval(() => {
+      const xyz = this.spherical(spheredr);
+      addOneTree(xyz.x, xyz.y, xyz.z);
+      num++;
+      if (num > 128) {
+        clearInterval(seti1)
+      }
+    }, 200);
+
+  }
+
+  tweenScale(obj: any, a: number, b: number, time: number) {
+    const dscale = { x: a }
+    const tween = new TWEEN.Tween(dscale)
+      .to({ x: b }, time)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(() => {
+        obj?.scale.set(dscale.x, dscale.x, dscale.x);
+      })
+    tween.start();
+
+  }
+  private spherical(k: number) {
+    let u = Math.random() * 2 - 1;
+    let v = Math.random() * 2 - 1;
+    let r = Math.pow(u, 2) + Math.pow(v, 2);
+
+    while (r > 1) {
+      u = Math.random() * 2 - 1;
+      v = Math.random() * 2 - 1;
+      r = Math.pow(u, 2) + Math.pow(v, 2);
+    }
+
+    let x = 2 * u * Math.sqrt(1 - r);
+    let y = 2 * v * Math.sqrt(1 - r);
+    let z = 1 - 2 * r;
+
+    return { x: k * x, y: k * y, z: k * z };
+  }
+
+
+}

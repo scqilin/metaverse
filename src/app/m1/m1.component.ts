@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 @Component({
-  selector: 'app-one',
+  selector: 'app-m1',
   template: `
-
+    <div #m1></div>
   `,
   styles: [
   ]
 })
-export class OneComponent implements OnInit {
-
+export class M1Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
@@ -18,7 +17,6 @@ export class OneComponent implements OnInit {
   }
 
   initScene() {
-
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);

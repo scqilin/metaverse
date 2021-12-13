@@ -7,7 +7,7 @@ import { SimplexNoise } from 'three/examples/jsm/math/SimplexNoise.js';
 @Component({
   selector: 'app-m3',
   template: `
-    <span style="position: absolute;bottom:0">吞噬大树的数量：{{eattingnum}}</span>
+    <span style="position: absolute;bottom:10px;left:5px">吞噬大树的数量：{{eattingnum}}</span>
     <div #container></div>
   `,
   styles: [
@@ -139,7 +139,7 @@ export class M3Component implements OnInit {
 
     const simplex = new SimplexNoise();
     const geometry = new THREE.SphereBufferGeometry(0.5, 32, 32);
-    const material = new THREE.MeshPhongMaterial({ color: 0x58a050 });//0x588050
+    let  material = new THREE.MeshPhongMaterial({ color: 0x58a050 });//0x588050
     const materialr = new THREE.MeshPhongMaterial({ color: 0xff8000 });
     const cube = new THREE.Mesh(geometry, materialr);
     const uv = this.spherical(spheredr);
@@ -151,7 +151,7 @@ export class M3Component implements OnInit {
     // const uv = { u: 90, v:-30 };
     let _i = 0;
     let grps:any = [];
-    let nums = 1024;
+    let nums = 12;
     for(let i = 0; i < nums; i++){
       const cube2 = new THREE.Mesh(geometry, material);
       cube2.castShadow = true;
@@ -163,26 +163,44 @@ export class M3Component implements OnInit {
       const s = (1+.3*Math.sin(_i*11227)+Math.sin(_i*3/103) + Math.sin(_i/171) )* Math.PI * simplex.noise4d(cube.position.x*simk, cube.position.y*simk, cube.position.z*simk, .07);
       uv.u += 1*Math.sin(s);
       uv.v += 0.5*Math.cos(s);
-      const xyz = this.uvToxyz(uv.u, uv.v, spheredr );
-      cube.position.set(xyz[0], xyz[1], xyz[2]);
 
-      grps[_i%nums].position.set(xyz[0], xyz[1], xyz[2]);
+      let xyz = this.uvToxyz(uv.u, uv.v, spheredr );
+
+      cube.position.set(xyz[0], xyz[1], xyz[2]);
+      // let posx = grps[_i%grps.length].position.x;
+      // let posy = grps[_i%grps.length].position.y;
+      // let posz = grps[_i%grps.length].position.z;
+      // let len = grps.length - 1
+      for (let i = grps.length - 1; i > 0; i--) {
+        grps[i].position.copy(grps[i - 1].position);
+      }
+      grps[0].position.set(xyz[0], xyz[1], xyz[2]);
       // const xyz2 = this.uvToxyz(uv.u, uv.v, spheredr+15 );
       // camera.position.set(xyz2[0]+0.001, xyz2[1]+0.001, xyz2[2]+0.001);
       // camera.lookAt(new THREE.Vector3(0, 0, 0));
+      // let onetag = true
       treearr.forEach((group:any) => {
-        // 2 点之间的距离
         const distance = group.position.distanceTo(cube.position);
         if (distance < 1 && group.visible === true) {
-          // group.visible = false;
+          // onetag = false;
           this.eattingnum ++ ;
           const uvr = this.spherical(spheredr);
           const xyzr = this.uvToxyz(uvr.u ,uvr.v, spheredr);
           group.position.set(xyzr[0], xyzr[1], xyzr[2]);
           this.tweenScale(group, 0.1, 1, 2000)
           group.lookAt(new THREE.Vector3(0, 0, 0));
+
+          const stsmesh = new THREE.Mesh(geometry, material);
+          stsmesh.castShadow = true;
+          groupall.add(stsmesh);
+          grps.push(stsmesh);
+          // _i += 1;
+          // stsmesh.position.set(xyz[0], xyz[1], xyz[2]);
         }
       })
+      if(this.eattingnum%10 === 9){
+        material.color.r = (56+Math.floor(this.eattingnum/10))/256
+      }
 
     }, 10);
 

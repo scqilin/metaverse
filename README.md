@@ -18,6 +18,7 @@
 
 - 下一步：树加生长动画。完成
 
-- 下一步：满球乱跑的小人。
-
+- 下一步：满球乱跑的小人。完成
+  不过移动的不是小人，而是一条疯狂吞噬森林的大蛇，功能待完善。
+  
 演示地址： [https://scqilin.github.io/metaverse/](https://scqilin.github.io/metaverse/)

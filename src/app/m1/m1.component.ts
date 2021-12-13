@@ -65,6 +65,7 @@ export class M1Component implements OnInit {
     renderer.render(scene, camera);
 
     const controls = new OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 14;
 
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(1, 1, 1);

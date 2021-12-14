@@ -1,23 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { M1Component } from './m1/m1.component';
-import { M2Component } from './m2/m2.component';
-import { M3Component } from './m3/m3.component';
+
 const routes: Routes = [
   {
-    path: 'm1',
-    component: M1Component,
+    path: 'days',
+    children: [
+      {
+        path:"",
+        loadChildren:()=>import('./days/days.module').then(m=>m.DaysModule)
+      }
+    ]
   },
-  {
-    path: 'm2',
-    component: M2Component,
-  },
-  {
-    path: 'm3',
-    component: M3Component,
-  },
-  { path: '', redirectTo: 'm1', pathMatch: 'full' },
-  { path: '**', redirectTo: 'm1' },
+  // {
+  //   path: 'm1',
+  //   component: M1Component,
+  // },
+  // {
+  //   path: 'm2',
+  //   component: M2Component,
+  // },
+  // {
+  //   path: 'm3',
+  //   component: M3Component,
+  // },
+  { path: '', redirectTo: 'days', pathMatch: 'full' },
+  { path: '**', redirectTo: 'days' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes,{

@@ -22,5 +22,7 @@
   不过移动的不是小人，而是一条疯狂吞噬森林的大蛇，吞噬的大树越多，蛇越长也越黄！
 
 - Day4：还是加个小人吧。 
+  steve请求加入元宇宙
+- Day5：还是AR功能。
   
 演示地址： [https://scqilin.github.io/metaverse/](https://scqilin.github.io/metaverse/)

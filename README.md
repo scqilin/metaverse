@@ -23,6 +23,7 @@
 
 - Day4：还是加个小人吧。 
   steve请求加入元宇宙
-- Day5：还是AR功能。
+  
+- Day5：加入AR功能。
   
 演示地址： [https://scqilin.github.io/metaverse/](https://scqilin.github.io/metaverse/)

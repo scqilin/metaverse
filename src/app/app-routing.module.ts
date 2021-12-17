@@ -11,18 +11,6 @@ const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'm1',
-  //   component: M1Component,
-  // },
-  // {
-  //   path: 'm2',
-  //   component: M2Component,
-  // },
-  // {
-  //   path: 'm3',
-  //   component: M3Component,
-  // },
   { path: '', redirectTo: 'days', pathMatch: 'full' },
   { path: '**', redirectTo: 'days' },
 ];

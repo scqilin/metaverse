@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 @Component({
   selector: 'app-m1',
   template: `
@@ -83,6 +84,33 @@ export class M1Component implements OnInit {
       groupall.rotation.y += 0.001
     }
     animate();
+
+    const loader = new GLTFLoader();
+    loader.load('assets/models/tree.gltf', (gltf: any) => {
+
+      let meshs: any[] = [];
+      gltf.scene.children.forEach((element: { type: string; }) => {
+        let mesh: any = element;
+        meshs.push(mesh);
+
+      });
+
+      for(let i=0;i<60;i++){
+        meshs.forEach((mesh: any) => {
+          const group = new THREE.Group();
+          groupall.add(group);
+          group.add(mesh.clone());
+          mesh.position.set(0, spheredr , 0);
+          let scale = 0.15+Math.random()*0.1
+          mesh.scale.set(scale,scale,scale);
+          group.rotation.set(Math.PI*2*Math.random(), Math.PI*2*Math.random(), Math.PI*2*Math.random());
+
+        })
+      }
+
+
+    });
+
 
   }
   ngOnDestroy(): void {

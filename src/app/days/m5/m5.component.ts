@@ -88,6 +88,7 @@ export class M5Component implements OnInit {
         0.04
       ).texture;
       const applerARExporter = new USDZExporter();
+      const dom = this.container?.nativeElement;
       async function USDZModel() {
         const arraybuffer = await applerARExporter.parse(box);
         const blob = new Blob([arraybuffer], {
@@ -97,10 +98,10 @@ export class M5Component implements OnInit {
         a.id = 'link';
         a.href = '';
         a.download = 'asset.usdz';
-        document.body.appendChild(a);
+        dom.appendChild(a);
         const img = document.createElement('img');
         img.id = 'button';
-        img.style.width = '100';
+        img.style.width = '100px';
         img.src = 'assets/images/arkit.png';
         a.appendChild(img);
         a.style.position = 'absolute';

@@ -25,6 +25,8 @@
   steve请求加入元宇宙!
 
 - Day5：加入AR功能。完成
+
+- Day6：
  
   
 演示地址： [https://scqilin.github.io/metaverse/](https://scqilin.github.io/metaverse/)

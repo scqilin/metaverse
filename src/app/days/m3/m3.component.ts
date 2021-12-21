@@ -45,7 +45,7 @@ export class M3Component implements OnInit {
 
 
     scene.fog = new THREE.Fog(0x7ab7ee, 0, 200);
-    scene.add(new THREE.AxesHelper(10));
+    // scene.add(new THREE.AxesHelper(10));
     let spheredr = 10;
 
     const geometrySphere = new THREE.SphereGeometry(spheredr, 60, 60);

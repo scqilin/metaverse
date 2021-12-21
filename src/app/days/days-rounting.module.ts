@@ -6,6 +6,7 @@ import { M2Component } from './m2/m2.component';
 import { M3Component } from './m3/m3.component';
 import { M4Component } from './m4/m4.component';
 import { M5Component } from './m5/m5.component';
+import { M6Component } from './m6/m6.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'm5',
         component: M5Component
+      },
+      {
+        path: 'm6',
+        component: M6Component
       },
       { path: '', redirectTo: 'm3', pathMatch: 'full' },
       { path: '**', redirectTo: 'm3' },

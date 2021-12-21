@@ -232,7 +232,7 @@ export class M5Component implements OnInit {
       const applerARExporter = new USDZExporter();
       const dom = this.container?.nativeElement;
       async function USDZModel() {
-        const arraybuffer = await applerARExporter.parse(scene);
+        const arraybuffer = await applerARExporter.parse(groupall);
         const blob = new Blob([arraybuffer], {
           type: 'application/octet-stream',
         });

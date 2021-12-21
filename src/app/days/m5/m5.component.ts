@@ -207,14 +207,14 @@ export class M5Component implements OnInit {
 
     //你的three代码
 
-    // const boxGeo = new THREE.BoxBufferGeometry(1, 1, 1);
-    // const boxMat = new THREE.MeshStandardMaterial({
-    //   color: 'red',
-    // });
-    // const box = new THREE.Mesh(boxGeo, boxMat);
-    // scene.add(box);
-    // box.position.set(0, 0, -0.5);
-    // box.scale.set(0.1, 0.1, 0.1);
+    const boxGeo = new THREE.BoxBufferGeometry(1, 1, 1);
+    const boxMat = new THREE.MeshStandardMaterial({
+      color: 'red',
+    });
+    const box = new THREE.Mesh(boxGeo, boxMat);
+    scene.add(box);
+    box.position.set(0, 0, -0.5);
+    box.scale.set(0.1, 0.1, 0.1);
 
     const XR = () => {
       renderer.xr.enabled = true;
@@ -232,7 +232,7 @@ export class M5Component implements OnInit {
       const applerARExporter = new USDZExporter();
       const dom = this.container?.nativeElement;
       async function USDZModel() {
-        const arraybuffer = await applerARExporter.parse(groupall);
+        const arraybuffer = await applerARExporter.parse(sphere);
         const blob = new Blob([arraybuffer], {
           type: 'application/octet-stream',
         });

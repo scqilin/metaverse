@@ -17,7 +17,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   ]
 })
 export class DaysComponent implements OnInit {
-
+  m0tag = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -28,6 +28,10 @@ export class DaysComponent implements OnInit {
   }
   onClick() {
     this.audio.nativeElement?.play();
+  }
+  m0Message(code:any){
+    // console.log('code :>> ', code);
+    this.m0tag = true;
   }
 
 }

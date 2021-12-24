@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-m0',
@@ -22,7 +22,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
         <h3>{{message2}}</h3>
         <div *ngIf="successtag">
           <mat-spinner style="margin: auto;"></mat-spinner>
-          <h3>标识码生成中……</h3>
+          <h3>{{idCode}}</h3>
+          <span [ngStyle] = "{opacity:popacity}" >当前排队人数{{peopleNum}}人</span>
         </div>
 
     </div>
@@ -60,9 +61,12 @@ export class M0Component implements OnInit {
   message = "点击启动系统";
   restarttag = false;
   successtag = false;
+  popacity = 0;
   seti1: any;
   reinfo = "启动失败 点击重试!";
+  idCode = "标识码生成中……";
   message2 = ""
+  peopleNum = Math.floor(Math.random() * 1000)+100;
   list: any = [];
   listarr = [
     "系统启动",
@@ -101,13 +105,14 @@ export class M0Component implements OnInit {
     "……",
   ]
   @ViewChild('audio1') audio1: any;
+  @Output() sendMessage = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit(): void {
     // this.start();
   }
   onClickstart() {
-    if(this.message == "系统启动中......") return;
+    if(this.message != "点击启动系统") return;
     this.message = "系统启动中......";
     this.start();
     this.audio1.nativeElement?.play();
@@ -146,6 +151,7 @@ export class M0Component implements OnInit {
     }, 1000);
 
   }
+  // 启动成功
   failOrSuccess() {
     let now = new Date();
     let min = now.getMinutes();
@@ -173,6 +179,27 @@ export class M0Component implements OnInit {
     this.successtag = true;
     document.body.style.backgroundColor = "#000000";
     this.message2 = "恭喜您成功启动系统，请等待系统为您分配唯一标识码!";
+    let seti2 = setInterval(() => {
+        this.peopleNum -= Math.floor(Math.random() * 50);
+        if (this.peopleNum <= 0) {
+          this.peopleNum = 0;
+          clearInterval(seti2);
+          const code = Math.random().toString(36).substr(2).toLocaleUpperCase();
+          this.idCode = "您的标识码为: " + code;
+          this.popacity = 0;
+          this.begin(code)
+        }
+        if(this.popacity<1){
+          this.popacity += 0.1;
+        }
+    }, 2000);
+  }
+  // 启动
+  begin(code:any){
+    setTimeout(() => {
+      //向父级组件发送消息
+      this.sendMessage.emit(code);
+    }, 2000);
   }
 
 

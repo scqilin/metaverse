@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styles: [`
   .com{
     position: absolute;
-    color:#fff;
+    color:#999999;
     width: 100%;
    }
    .lia li{

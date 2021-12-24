@@ -29,6 +29,9 @@
   使用方法：点击左下角图片，下载USDZ文件，下载完成后点击运行开启摄像头。
   
 - Day6：
- 
+
+----
+
+启动页面大改,欢迎体验！
   
 演示地址： [https://scqilin.github.io/metaverse/](https://scqilin.github.io/metaverse/)

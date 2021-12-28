@@ -11,8 +11,12 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', redirectTo: 'days', pathMatch: 'full' },
-  { path: '**', redirectTo: 'days' },
+  {
+    path: 'years',
+    loadChildren:()=>import('./years/years.module').then(m=>m.YearsModule)
+  },
+  { path: '', redirectTo: 'years', pathMatch: 'full' },
+  { path: '**', redirectTo: 'years' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes,{

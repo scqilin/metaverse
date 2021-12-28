@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-
+import { YearsService } from '../../services/years.service';
 @Component({
   selector: 'app-m0',
   template: `
@@ -11,7 +11,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
         启动失败 点击重试
       </p >
       <h1>
-        <mat-progress-bar style="height: 12px;" mode="determinate" value={{num}}></mat-progress-bar>
+        <mat-progress-bar color="#00ff00" style="height: 12px;" mode="determinate" value={{num}}></mat-progress-bar>
       </h1>
 
     </div>
@@ -35,6 +35,16 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
   `,
   styles: [
     `
+    ::ng-deep .mat-progress-bar-fill::after {
+      background-color: #5ac43a;
+    }
+    ::ng-deep .mat-progress-spinner circle, .mat-spinner circle{
+      stroke: #5ac43a;
+    }
+
+    ::ng-deep .mat-progress-bar-buffer {
+      background: #eee;
+    }
     .list span{
       display: block;
       margin-left: 20px;
@@ -56,8 +66,8 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
   `
   ]
 })
-export class M0Component implements OnInit {
-  num = -1;
+export class Y0Component implements OnInit {
+  num = 0;
   message = "点击启动系统";
   restarttag = false;
   successtag = false;
@@ -104,12 +114,15 @@ export class M0Component implements OnInit {
     "元宇宙元年",
     "……",
   ]
+  code = '';
   @ViewChild('audio1') audio1: any;
   @Output() sendMessage = new EventEmitter<any>();
-  constructor() { }
+  constructor(private yearsService: YearsService) {
+    this.code = this.yearsService.getCode();
+  }
 
   ngOnInit(): void {
-    // this.start();
+
   }
   onClickstart() {
     if(this.message != "点击启动系统") return;
@@ -123,7 +136,7 @@ export class M0Component implements OnInit {
     // this.audio1.nativeElement.volume = 0.5;
   }
   start() {
-    this.num = -1;
+    this.num = 0;
     this.list = [];
     this.message = "系统启动中......";
     this.message2 = "";
@@ -151,7 +164,7 @@ export class M0Component implements OnInit {
     }, 1000);
 
   }
-  // 启动成功
+  // 是否启动成功
   failOrSuccess() {
     let now = new Date();
     let min = now.getMinutes();
@@ -184,10 +197,10 @@ export class M0Component implements OnInit {
         if (this.peopleNum <= 0) {
           this.peopleNum = 0;
           clearInterval(seti2);
-          const code = Math.random().toString(36).substr(2).toLocaleUpperCase();
-          this.idCode = "您的标识码为: " + code;
+
+          this.idCode = "您的标识码为: " + this.code;
           this.popacity = 0;
-          this.begin(code)
+          this.begin()
         }
         if(this.popacity<1){
           this.popacity += 0.1;
@@ -195,11 +208,8 @@ export class M0Component implements OnInit {
     }, 2000);
   }
   // 启动
-  begin(code:any){
-    setTimeout(() => {
-      //向父级组件发送消息
-      this.sendMessage.emit(code);
-    }, 2000);
+  begin(){
+    this.yearsService.runOver({code:this.code});
   }
 
 

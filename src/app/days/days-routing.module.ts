@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DaysComponent } from './days.component';
-import { M0Component } from './m0/m0.component';
 import { M1Component } from './m1/m1.component';
 import { M2Component } from './m2/m2.component';
 import { M3Component } from './m3/m3.component';
@@ -14,10 +13,6 @@ const routes: Routes = [
     path: '',
     component: DaysComponent,
     children: [
-      {
-        path: 'm0',
-        component: M0Component
-      },
       {
         path: 'm1',
         component: M1Component
@@ -42,8 +37,8 @@ const routes: Routes = [
         path: 'm6',
         component: M6Component
       },
-      // { path: '', redirectTo: 'm3', pathMatch: 'full' },
-      // { path: '**', redirectTo: 'm3' },
+      { path: '', redirectTo: 'm3', pathMatch: 'full' },
+      { path: '**', redirectTo: 'm3' },
     ]
   },
 ]

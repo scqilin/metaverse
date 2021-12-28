@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styles: [`
   .com{
     position: absolute;
-    color:#999999;
+    color:#eeeeee;
     width: 100%;
    }
    .lia li{
@@ -17,21 +17,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   ]
 })
 export class DaysComponent implements OnInit {
-  m0tag = false;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
-  title = 'metaverse';
+  ngOnInit(): void {}
+  title = 'Metaverse';
   @ViewChild('audio') audio: any;
   ngAfterViewInit() {
   }
   onClick() {
     this.audio.nativeElement?.play();
-  }
-  m0Message(code:any){
-    // console.log('code :>> ', code);
-    this.m0tag = true;
   }
 
 }

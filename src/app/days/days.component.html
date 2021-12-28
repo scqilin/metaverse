@@ -3,13 +3,8 @@
     <h1>
       Welcome to {{title}}!
     </h1>
-    <app-m0 *ngIf="!m0tag" (sendMessage)="m0Message($event)"></app-m0>
-    <!-- <app-m3 *ngIf="m0tag"></app-m3> -->
-    <div *ngIf="m0tag">
-      系统升级中……
-    </div>
   </div>
-  <!-- <div (click)="onClick()" class="lia" style="position: absolute;top: 20px;left: 10px;">
+  <div (click)="onClick()" class="lia" style="position: absolute;top: 20px;left: 10px;">
     <li> <a mat-raised-button routerLink="./m1">Day1</a></li>
     <li> <a mat-raised-button routerLink="./m2">Day2</a></li>
     <li> <a mat-raised-button routerLink="./m3">Day3</a></li>
@@ -17,9 +12,9 @@
     <li> <a mat-raised-button routerLink="./m5">Day5</a></li>
     <li> <a mat-raised-button routerLink="./m6">Day6</a></li>
 
-  </div> -->
+  </div>
 </div>
-<!-- <router-outlet></router-outlet> -->
+<router-outlet></router-outlet>
 <audio #audio loop="loop">
   <source src="assets/sound/forestEnvironment.mp3" type="audio/mp3" />
 </audio>

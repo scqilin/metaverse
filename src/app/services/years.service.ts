@@ -4,11 +4,17 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class YearsService {
   uuidcode = Math.random().toString(36).substr(2,6).toLocaleUpperCase();
-  private runOverSource = new Subject();
-  runOver$ = this.runOverSource.asObservable();
+  private runOverSub = new Subject();
+  runOver$ = this.runOverSub.asObservable();
 
   runOver(obj: any) {
-    this.runOverSource.next(obj);
+    this.runOverSub.next(obj);
+  }
+
+  private clickStartSub = new Subject();
+  clickStart$ = this.clickStartSub.asObservable();
+  clickStart(obj: any) {
+    this.clickStartSub.next(obj);
   }
 
   getCode() {

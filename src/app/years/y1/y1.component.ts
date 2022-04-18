@@ -12,14 +12,12 @@ import { YearsService } from '../../services/years.service';
   ]
 })
 export class Y1Component implements OnInit {
-  title = '系统维护中……'
+  title = '加载中……'
   code = ''
   constructor(private yearsService: YearsService) {
     this.code = this.yearsService.getCode()
     this.yearsService.runOver$.subscribe(res => {
         let obj: any = res;
-        console.log(this.code);
-
     });
   }
 

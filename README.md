@@ -26,3 +26,6 @@
 启动页面大改,欢迎体验！
   
 演示地址： [https://scqilin.github.io/metaverse/](https://scqilin.github.io/metaverse/)
+
+ng build 
+docs目录

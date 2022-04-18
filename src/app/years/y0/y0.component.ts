@@ -129,6 +129,7 @@ export class Y0Component implements OnInit {
     this.message = "系统启动中......";
     this.start();
     this.audio1.nativeElement?.play();
+    this.yearsService.clickStart({start:1})
   }
   onClick() {
     this.start();
@@ -171,7 +172,7 @@ export class Y0Component implements OnInit {
     if (min % 10 == 0) {
       return true;
     } else {
-      if (Math.random() > 0.8) {
+      if (Math.random() > 0.1) {
         return true;
       } else {
         return false;
@@ -193,7 +194,7 @@ export class Y0Component implements OnInit {
     document.body.style.backgroundColor = "#000000";
     this.message2 = "恭喜您成功启动系统，请等待系统为您分配唯一标识码!";
     let seti2 = setInterval(() => {
-        this.peopleNum -= Math.floor(Math.random() * 50);
+        this.peopleNum -= Math.floor(Math.random() * 100);
         if (this.peopleNum <= 0) {
           this.peopleNum = 0;
           clearInterval(seti2);

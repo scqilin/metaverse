@@ -169,15 +169,7 @@ export class Y0Component implements OnInit {
   failOrSuccess() {
     let now = new Date();
     let min = now.getMinutes();
-    if (min % 10 == 0) {
-      return true;
-    } else {
-      if (Math.random() > 0.1) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return (min % 10 == 0) || Math.random() > 0.1;
   }
   startFail() {
     this.restarttag = true;
